@@ -1,0 +1,35 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: escape-room-mysql
+    environment:
+      MYSQL_DATABASE: escape_room
+      MYSQL_USER: escape
+      MYSQL_PASSWORD: escape
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build: .
+    container_name: escape-room-api
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/escape_room?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: escape
+      SPRING_DATASOURCE_PASSWORD: escape
+      HOLD_DURATION_SECONDS: 300
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:

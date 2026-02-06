@@ -1,0 +1,24 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/escape_room}
+    username: ${SPRING_DATASOURCE_USERNAME:escape}
+    password: ${SPRING_DATASOURCE_PASSWORD:escape}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        jdbc:
+          time_zone: UTC
+    show-sql: false
+
+app:
+  hold:
+    duration-seconds: ${HOLD_DURATION_SECONDS:300}

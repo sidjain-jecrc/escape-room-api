@@ -1,0 +1,38 @@
+# Build
+build/
+out/
+target/
+
+# Gradle
+.gradle/
+
+# Compiled
+*.class
+*.jar
+*.war
+*.ear
+*.log
+!gradle/wrapper/*.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / local config (secrets)
+.env
+.env.local
+*.local
+
+# Gradle download leftovers
+gradle-*.zip
