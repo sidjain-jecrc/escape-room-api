@@ -122,8 +122,6 @@ Expiration uses **opportunistic cleanup**: when handling a hold or confirm, the 
 
 **What:** A scheduled job (e.g. every minute) that finds slots in `HELD` with `hold_expires_at < now()` and sets them back to `AVAILABLE`.
 
-**Design:** Use Spring `@Scheduled` or a separate worker process. Use a single SQL update with `WHERE status = 'HELD' AND hold_expires_at < ?` to avoid touching rows that are still valid. Add metrics (e.g. number of expired holds per run) and optional alerting.
-
 **Why not in this repo:** Kept the solution minimal; opportunistic cleanup is correct and sufficient for the scope. A background job would be the next step for production.
 
 ### TTL-based expiration (e.g. ElastiCache)
@@ -138,18 +136,14 @@ Expiration uses **opportunistic cleanup**: when handling a hold or confirm, the 
 
 **What:** Structured logging (e.g. JSON logs with correlation IDs) and metrics (counters for holds, confirms, releases, expirations; latency percentiles).
 
-**Design:** Use Micrometer + Prometheus (or similar) and log in a structured format (e.g. Logback JSON). Optionally add tracing (e.g. Sleuth/Zipkin) for request flows.
-
-**Why not here:** Not required for the exercise; would be part of production hardening.
-
 ---
 
-## 4. AI tools used (if any) and how they helped
+## 4. AI tools used and how they helped
 
 **Cursor** was used for:
 
 - **Scaffolding:** Controllers, DTOs, and repository/service boilerplate.
-- **Refactoring:** Package renames, `jakarta` → `javax` for Spring Boot 2.7, and README formatting.
+- **Refactoring:** Package renames and README formatting.
 - **Tests:** Generating test structure and three tests that cover expiration, concurrent holds, and confirm-vs-expire behaviour.
 - **README:** Formatting and restructuring (including this layout).
 
