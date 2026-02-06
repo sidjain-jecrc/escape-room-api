@@ -3,6 +3,9 @@ package com.example.escaperoom.api;
 import com.example.escaperoom.api.dto.HoldResponse;
 import com.example.escaperoom.model.Slot;
 import com.example.escaperoom.service.SlotService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -17,23 +20,26 @@ public class SlotController {
         this.service = service;
     }
 
-    @GetMapping("/slots/{slotId}")
-    public Slot getSlot(@PathVariable Long slotId) {
-        return service.getSlot(slotId);
+    @GetMapping(value = "/slots/{slotId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Slot> getSlot(@PathVariable Long slotId) {
+        return ResponseEntity.ok(service.getSlot(slotId));
     }
 
-    @PostMapping("/slots/{slotId}/hold")
-    public HoldResponse hold(@PathVariable Long slotId) {
-        return service.holdSlot(slotId);
+    @PostMapping(value = "/slots/{slotId}/hold", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HoldResponse> hold(@PathVariable Long slotId) {
+        HoldResponse body = service.holdSlot(slotId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 
-    @PostMapping("/holds/{holdId}/confirm")
-    public void confirm(@PathVariable UUID holdId) {
+    @PostMapping(value = "/holds/{holdId}/confirm", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> confirm(@PathVariable UUID holdId) {
         service.confirmHold(holdId);
+        return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/holds/{holdId}")
-    public void release(@PathVariable UUID holdId) {
+    @DeleteMapping(value = "/holds/{holdId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> release(@PathVariable UUID holdId) {
         service.releaseHold(holdId);
+        return ResponseEntity.noContent().build();
     }
 }

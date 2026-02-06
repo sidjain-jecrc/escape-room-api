@@ -20,9 +20,6 @@ public class Slot {
 
     private Instant holdExpiresAt;
 
-    @Version
-    private Long version;
-
     protected Slot() {}
 
     public Slot(Long slotId, SlotStatus status) {
@@ -34,7 +31,6 @@ public class Slot {
     public SlotStatus getStatus() { return status; }
     public UUID getHoldId() { return holdId; }
     public Instant getHoldExpiresAt() { return holdExpiresAt; }
-    public Long getVersion() { return version; }
 
     public void setStatus(SlotStatus status) { this.status = status; }
     public void setHoldId(UUID holdId) { this.holdId = holdId; }
