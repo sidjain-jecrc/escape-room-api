@@ -1,5 +1,7 @@
 # Escape Room Booking API (Hold + Confirm)
 
+Build an API for booking escape room time slots with a "hold" mechanism.
+
 A small Spring Boot (Java 11) service that supports:
 - **Hold a slot** for 5 minutes (auto-expiration)
 - **Confirm** a hold into a booking
