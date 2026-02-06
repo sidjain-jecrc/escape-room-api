@@ -1,13 +1,17 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:escape_room_test;MODE=MySQL;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:escape_room_test;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=TRUE
     driver-class-name: org.h2.Driver
     username: sa
     password:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
+    defer-datasource-initialization: true
     show-sql: false
+  sql:
+    init:
+      mode: always
 
 app:
   hold:

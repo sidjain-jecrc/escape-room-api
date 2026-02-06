@@ -1,7 +1,7 @@
 package com.example.escaperoom;
 
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import java.time.Clock;
@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.concurrent.atomic.AtomicReference;
 
-@TestConfiguration
+@Configuration
 public class TestClockConfig {
 
     public static class MutableClock extends Clock {

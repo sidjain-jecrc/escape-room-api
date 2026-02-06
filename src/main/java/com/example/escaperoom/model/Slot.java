@@ -1,6 +1,6 @@
 package com.example.escaperoom.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
 

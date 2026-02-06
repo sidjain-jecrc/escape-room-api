@@ -8,7 +8,9 @@ import com.example.escaperoom.service.SlotService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Instant;
@@ -18,12 +20,23 @@ import java.util.concurrent.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
-@SpringBootTest
-@Import(TestClockConfig.class)
+@SpringBootTest(properties = "spring.main.allow-bean-definition-overriding=true")
 class SlotServiceTest {
 
-    @Autowired SlotService service;
-    @Autowired TestClockConfig.MutableClock clock;
+    @TestConfiguration
+    static class TestClockConfigInner {
+        @Bean
+        @Primary
+        public TestClockConfig.MutableClock clock() {
+            return new TestClockConfig.MutableClock();
+        }
+    }
+
+    @Autowired
+    private SlotService service;
+
+    @Autowired
+    private TestClockConfig.MutableClock clock;
 
     @Test
     void holdExpiresAndCannotBeConfirmed() {
@@ -35,6 +48,9 @@ class SlotServiceTest {
 
         ApiExceptions.Gone ex = assertThrows(ApiExceptions.Gone.class, () -> service.confirmHold(holdId));
         assertTrue(ex.getMessage().toLowerCase().contains("expired"));
+
+        // confirmHold rolled back, so releaseExpired never committed. Trigger cleanup in a new transaction.
+        service.holdSlot(2L);
 
         Slot slot = service.getSlot(1L);
         assertEquals(SlotStatus.AVAILABLE, slot.getStatus());

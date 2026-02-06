@@ -4,9 +4,9 @@ import com.example.escaperoom.api.dto.HoldResponse;
 import com.example.escaperoom.model.Slot;
 import com.example.escaperoom.model.SlotStatus;
 import com.example.escaperoom.repo.SlotRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.Duration;

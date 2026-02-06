@@ -1,4 +1,4 @@
-package com.kindred.escaperoom.api.dto;
+package com.example.escaperoom.api.dto;
 
 import java.time.Instant;
 import java.util.UUID;
