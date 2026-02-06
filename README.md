@@ -2,7 +2,7 @@
 
 Build an API for booking escape room time slots with a "hold" mechanism.
 
-A small Spring Boot (Java 11) service that supports:
+A small Spring Boot service that supports:
 - **Hold a slot** for 5 minutes (auto-expiration)
 - **Confirm** a hold into a booking
 - **Release** a hold explicitly
@@ -71,12 +71,23 @@ Response:
 
 ---
 
-## Gradle Wrapper
+## Prerequisites & Build
 
-This project includes the Gradle wrapper (`gradlew`, `gradlew.bat`, and `gradle/wrapper/`). If `./gradlew` fails (e.g. missing or invalid `gradle-wrapper.jar`), generate the wrapper once with an installed Gradle:
+- **JDK 11**
+- **Gradle 7.6.1** (via wrapper; no global install required)
+
+This project uses the **Gradle wrapper** (`gradlew`, `gradlew.bat`, and `gradle/wrapper/`), so you can build and run without installing Gradle:
 
 ```bash
-gradle wrapper --gradle-version 8.5
+./gradlew build    # build
+./gradlew test     # run tests
+./gradlew bootRun  # run the app (needs DB or use Docker)
+```
+
+If the wrapper fails (e.g. missing or invalid `gradle-wrapper.jar`), regenerate it with an installed Gradle:
+
+```bash
+gradle wrapper --gradle-version 7.6.1
 ```
 
 Install Gradle if needed (e.g. `brew install gradle` or [gradle.org/install](https://gradle.org/install)), then run the command above from the project root.
