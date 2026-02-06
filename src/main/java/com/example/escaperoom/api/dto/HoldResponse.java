@@ -13,11 +13,11 @@ public final class HoldResponse {
         this.expiresAt = expiresAt;
     }
 
-    public UUID holdId() {
+    public UUID getHoldId() {
         return holdId;
     }
 
-    public Instant expiresAt() {
+    public Instant getExpiresAt() {
         return expiresAt;
     }
 }

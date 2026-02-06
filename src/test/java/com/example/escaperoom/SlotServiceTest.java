@@ -41,7 +41,7 @@ class SlotServiceTest {
     @Test
     void holdExpiresAndCannotBeConfirmed() {
         HoldResponse hold = service.holdSlot(1L);
-        UUID holdId = hold.holdId();
+        UUID holdId = hold.getHoldId();
 
         // Advance beyond the configured 5 seconds
         clock.advanceSeconds(6);
@@ -79,7 +79,7 @@ class SlotServiceTest {
             maybeFail = e;
         }
 
-        assertNotNull(r1.holdId());
+        assertNotNull(r1.getHoldId());
         assertNotNull(maybeFail, "Second hold should fail");
         assertTrue(maybeFail.getCause() instanceof ApiExceptions.Conflict);
 
@@ -90,7 +90,7 @@ class SlotServiceTest {
     void confirmVsExpireRaceNoDoubleBooking() throws Exception {
         // Create a hold that expires at t+5s
         HoldResponse hold = service.holdSlot(3L);
-        UUID holdId = hold.holdId();
+        UUID holdId = hold.getHoldId();
 
         ExecutorService exec = Executors.newFixedThreadPool(2);
         CountDownLatch start = new CountDownLatch(1);
